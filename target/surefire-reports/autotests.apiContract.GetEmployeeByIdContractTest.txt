@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: autotests.apiContract.GetEmployeeByIdContractTest
--------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.797 s -- in autotests.apiContract.GetEmployeeByIdContractTest
