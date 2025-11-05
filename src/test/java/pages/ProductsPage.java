@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+/** В классе указаны: локаторы, методы для взаимодействия с элементами на странице, assertions  */
 
 public class ProductsPage extends BasePage {
 
@@ -78,5 +79,4 @@ public class ProductsPage extends BasePage {
                 "Ожидался URL: " + expectedUrl + ", но получен: " + actualUrl);
         return this;
     }
-
 }

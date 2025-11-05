@@ -10,7 +10,6 @@ import static io.restassured.RestAssured.given;
 
 public class AuthHelper {
 
-   //private static EnvHelper envHelper;
     private final EnvHelper envHelper = new EnvHelper();
 
     public AuthHelper() throws IOException {

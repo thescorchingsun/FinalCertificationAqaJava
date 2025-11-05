@@ -2,7 +2,6 @@ package config;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.logging.Level;
+
+/** В классе описаны настройки для браузера firefox и chrome */
 @Slf4j
 public class BrowserSettings {
     private static final Logger log = LoggerFactory.getLogger(BrowserSettings.class);

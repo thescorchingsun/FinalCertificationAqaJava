@@ -4,7 +4,7 @@ import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+/** В классе указаны: локаторы, методы для взаимодействия с элементами на странице, assertions  */
 public class CartPage extends BasePage {
 
     private final By checkoutButton = By.id("checkout");

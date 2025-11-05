@@ -4,7 +4,7 @@ import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+/** В классе указаны: локаторы, методы для взаимодействия с элементами на странице */
 public class CheckoutTwoPage extends BasePage {
 
     private final By finishButton = By.id("finish");

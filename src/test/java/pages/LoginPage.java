@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
+/** В классе указаны: локаторы, методы для взаимодействия с элементами на странице, assertions  */
 
 public class LoginPage extends BasePage {
 
@@ -14,7 +15,6 @@ public class LoginPage extends BasePage {
     private final By passwordInput = By.name("password");
     private final By loginButtonContainer = By.cssSelector("#login_button_container");
     private final By loginButton = By.name("login-button");
-
 
     public LoginPage(WebDriver driver) {
         super(driver);

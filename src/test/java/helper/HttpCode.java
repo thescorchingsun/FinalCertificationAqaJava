@@ -1,5 +1,5 @@
 package helper;
-
+/** Код ответа с сервера */
 public class HttpCode {
 
     public static final int OK = 200;

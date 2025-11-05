@@ -3,7 +3,7 @@ package pages;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+/** В классе указаны: локаторы, методы для взаимодействия с элементами на странице*/
 public class CheckoutOnePage extends BasePage {
 
     private final By firstNameInput = By.id("first-name");

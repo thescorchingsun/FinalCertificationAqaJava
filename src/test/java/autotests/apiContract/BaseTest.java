@@ -5,6 +5,10 @@ import helper.EmployeeHelperDB;
 import helper.EnvHelper;
 
 import io.qameta.allure.Step;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
+import listener.CustomTpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -28,8 +32,14 @@ public class BaseTest {
     public static void setUri() throws SQLException, IOException {
         envHelper = new EnvHelper();
         baseURI = envHelper.getApiBaseUrl();
+
         employeeHelperDB = new EmployeeHelperDB();
         authHelper = new AuthHelper();
+
+        // логирование API запросов и ответов
+        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(),
+                CustomTpl.customLogFilter().withCustomTemplates());
+
     }
 
 }
