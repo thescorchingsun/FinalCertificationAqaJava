@@ -24,7 +24,7 @@ public class CartPage extends BasePage {
     @Step("Проверить кол-во товаров в корзине")
     public CartPage assertCountItemsInCart(int item) {
         int countItem = driver.findElements(cartItem).size();
-        Assertions.assertEquals(countItem,item);
+        Assertions.assertEquals(countItem, item);
         return this;
     }
 

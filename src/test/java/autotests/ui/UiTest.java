@@ -1,4 +1,4 @@
-package autotests;
+package autotests.ui;
 
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.io.IOException;
 import java.util.List;
+
 @Slf4j
-public class Tests extends BaseTest {
+public class UiTest extends BaseTest {
 
     private final String URL_CATALOG = "https://www.saucedemo.com/inventory.html";
     private final String USERNAME_STANDARD = "standard_user";
@@ -26,12 +28,10 @@ public class Tests extends BaseTest {
     private final String POSTAL_CODE = "239000";
     private final String EXPECTED_RESULT_PRICE_TOTAL = "Total: 58.29";
 
-
     @Test
     @DisplayName("Успешная авторизация со стандартным пользователем")
     @Tags({@Tag("smoke"), @Tag("regress")})
-    @Issue("JIRA-1")
-    public void loginStandardUserTest() {
+    public void loginStandardUserTest() throws IOException {
         loginPage.openLoginPage()
                 .typeUsername(USERNAME_STANDARD)
                 .typePassword(PASSWORD)
@@ -42,8 +42,7 @@ public class Tests extends BaseTest {
     @Test
     @DisplayName("Ошибка авторизация с заблокированным пользователем")
     @Tags({@Tag("smoke"), @Tag("regress")})
-    @Issue("JIRA-2")
-    public void loginByBlockedUserTest() {
+    public void loginByBlockedUserTest() throws IOException {
         loginPage.openLoginPage()
                 .typeUsername(USERNAME_BLOCKED)
                 .typePassword(PASSWORD)
@@ -53,13 +52,12 @@ public class Tests extends BaseTest {
 
     @DisplayName("E2E тест. Авторизация и добавление товаров в корзину")
     @Tags({@Tag("smoke"), @Tag("regress")})
-    @Issue("JIRA-3")
     @ParameterizedTest(name = "E2E сценарий под пользователем {0}")
     @CsvSource({
             "standard_user, secret_sauce",
             "performance_glitch_user, secret_sauce"
     })
-    public void e2eTest(String username, String password) {
+    public void e2eTest(String username, String password) throws IOException {
         loginPage.openLoginPage()
                 .successfulAuth(username, password)
                 .isProductDisplayed(PRODUCTS)

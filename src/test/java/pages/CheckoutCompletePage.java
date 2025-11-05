@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 public class CheckoutCompletePage extends BasePage {
 
     private final By titleText = By.xpath("//div/span[@data-test='title']");
+
     public CheckoutCompletePage(WebDriver driver) {
         super(driver);
     }

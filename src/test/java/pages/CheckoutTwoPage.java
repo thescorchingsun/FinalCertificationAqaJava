@@ -17,7 +17,7 @@ public class CheckoutTwoPage extends BasePage {
     @Step("Проверить сумму заказа")
     public CheckoutTwoPage assertCheckTotalPrice(String priceTotal) {
 
-        String actualPriceTotal = driver.findElement(totalPrice).getText().replace("$","");
+        String actualPriceTotal = driver.findElement(totalPrice).getText().replace("$", "");
         Assertions.assertEquals(priceTotal, actualPriceTotal);
         return this;
     }
@@ -27,5 +27,4 @@ public class CheckoutTwoPage extends BasePage {
         driver.findElement(finishButton).click();
         return new CheckoutCompletePage(driver);
     }
-
 }

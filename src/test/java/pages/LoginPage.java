@@ -1,9 +1,12 @@
 package pages;
 
+import helper.EnvHelper;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import java.io.IOException;
 
 public class LoginPage extends BasePage {
 
@@ -12,15 +15,14 @@ public class LoginPage extends BasePage {
     private final By loginButtonContainer = By.cssSelector("#login_button_container");
     private final By loginButton = By.name("login-button");
 
-    private final String BASE_URL = "https://www.saucedemo.com/";
 
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
     @Step("Открыть страницу авторизации")
-    public LoginPage openLoginPage() {
-        driver.get(BASE_URL);
+    public LoginPage openLoginPage() throws IOException {
+        driver.get(new EnvHelper().getUiBaseUrl());
         return this;
     }
 
@@ -61,6 +63,4 @@ public class LoginPage extends BasePage {
     public void assertEquals(String text) {
         Assertions.assertEquals(text, driver.findElement(loginButtonContainer).getText());
     }
-
-
 }

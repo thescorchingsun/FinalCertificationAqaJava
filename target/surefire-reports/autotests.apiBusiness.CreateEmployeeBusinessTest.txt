@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: autotests.apiBusiness.CreateEmployeeBusinessTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.78 s -- in autotests.apiBusiness.CreateEmployeeBusinessTest

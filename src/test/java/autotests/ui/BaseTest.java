@@ -1,6 +1,8 @@
-package autotests;
+package autotests.ui;
 
 import config.BrowserSettings;
+
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,22 +21,24 @@ public class BaseTest {
     protected LoginPage loginPage;
 
     @BeforeEach
+    @Step("Запуск браузера и инициализация страниц")
     public void setUp() throws Exception {
         log.info("setUp");
         // Для локального запуска выбрать тип браузера
-        driver =  new BrowserSettings().browserSettingsConfig("firefox");
+        driver = new BrowserSettings().browserSettingsConfig("firefox");
         // Инициализация страниц
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
     }
 
     @AfterEach
+    @Step("Очистка куки и закрытие браузера")
     public void tearDown() {
         log.info("tearDown");
         if (driver != null) {
             driver.manage().deleteAllCookies();
             driver.quit();
         }
-
     }
+
 }
