@@ -2,24 +2,20 @@ package listener;
 
 import io.qameta.allure.restassured.AllureRestAssured;
 
+/**
+ * Возврат нового фильтра AllureRestAssured с кастомными шаблонами
+ * для логирования request и response.
+ */
 public class CustomTpl {
-
-    private static final AllureRestAssured FILTER = new AllureRestAssured();
 
     private CustomTpl() {
     }
 
-    public static CustomTpl customLogFilter() {
-        return InitLogFilter.logFilter;
+    public static AllureRestAssured customLogFilter() {
+        AllureRestAssured filter = new AllureRestAssured();
+        filter.setRequestTemplate("request.ftl");
+        filter.setResponseTemplate("response.ftl");
+        return filter;
     }
 
-    public AllureRestAssured withCustomTemplates() {
-        FILTER.setRequestTemplate("request.ftl");
-        FILTER.setResponseTemplate("response.ftl");
-        return FILTER;
-    }
-
-    private static class InitLogFilter {
-        private static final CustomTpl logFilter = new CustomTpl();
-    }
 }

@@ -37,9 +37,10 @@ bin/
 
 ### VS Code ###
 .vscode/
-
-### Mac OS ###
 .DS_Store
 .idea
-.allure
+
+# Allure и временные файлы
+.allure/
+.allure/allure-2.30.0/
 target/

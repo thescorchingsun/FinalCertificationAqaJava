@@ -36,9 +36,8 @@ public class BaseTest {
         employeeHelperDB = new EmployeeHelperDB();
         authHelper = new AuthHelper();
 
-        // логирование API запросов и ответов
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(),
-                CustomTpl.customLogFilter().withCustomTemplates());
+        // Один фильтр AllureRestAssured для всех тестов
+        RestAssured.filters(CustomTpl.customLogFilter());
 
     }
 

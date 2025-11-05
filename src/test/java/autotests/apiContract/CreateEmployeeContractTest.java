@@ -111,7 +111,6 @@ public class CreateEmployeeContractTest extends BaseTest {
                 body("position", equalTo(POSITION));
     }
 
-
     @Test
     @DisplayName("POST. Ошибка создание сотрудника без имени, сообщение об ошибке")
     public void createEmployeeWithOutNameErrorMessageTest() {
