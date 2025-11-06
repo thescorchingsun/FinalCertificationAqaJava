@@ -1,6 +1,9 @@
 package autotests.ui;
 
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -13,6 +16,9 @@ import java.io.IOException;
 import java.util.List;
 
 @Slf4j
+@Epic("UI Tests")
+@Feature("SauceDemo Application")
+@Story("User Authentication & Cart")
 public class UiTest extends BaseTest {
 
     private final String URL_CATALOG = "https://www.saucedemo.com/inventory.html";

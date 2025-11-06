@@ -2,7 +2,8 @@ package autotests.apiBusiness;
 
 import entities.EmployeeRequest;
 import entities.EmployeeResponse;
-import io.qameta.allure.Step;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
@@ -14,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
+@Epic("Business Logic")
+@Story("Get employee By name")
 public class GetEmployeeByNameBusinessTest extends BaseTest {
 
     private final String FIRSTNAME = "Margarita";

@@ -1,5 +1,6 @@
 package autotests.apiBusiness;
 
+import com.github.javafaker.Faker;
 import helper.EmployeeHelperDB;
 import helper.EnvHelper;
 import io.qameta.allure.Step;
@@ -17,6 +18,7 @@ import static io.restassured.RestAssured.baseURI;
 @Slf4j
 public class BaseTest {
 
+    Faker faker = new Faker();
     protected static EnvHelper envHelper;
     static EmployeeHelperDB employeeHelperDB;
     static int createdEmployeeId = -1;

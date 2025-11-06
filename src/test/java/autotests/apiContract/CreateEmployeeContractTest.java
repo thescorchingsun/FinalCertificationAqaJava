@@ -4,20 +4,24 @@ import entities.EmployeeRequest;
 import helper.AuthHelper;
 import helper.EmployeeHelperDB;
 import helper.HttpCode;
-import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import io.restassured.http.ContentType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 @Slf4j
+@Epic("Contract Tests")
+@Story("Create Employee")
 public class CreateEmployeeContractTest extends BaseTest {
 
     private final String FIRSTNAME = "Ivan";
@@ -26,6 +30,7 @@ public class CreateEmployeeContractTest extends BaseTest {
     private final String CITY = "Petrozavodsk";
 
     @BeforeEach
+    @Step("Инициализация helper-ов перед тестом")
     public void setUp() throws SQLException, IOException {
         authHelper = new AuthHelper();
         employeeHelperDB = new EmployeeHelperDB();
@@ -151,7 +156,7 @@ public class CreateEmployeeContractTest extends BaseTest {
                     when().
                     post("/employee").
                     then().log().all().
-                    time(lessThan(1300L)).
+                    time(lessThan(1300L), TimeUnit.MILLISECONDS).
                     extract().
                     jsonPath().
                     getInt("id");
@@ -164,6 +169,5 @@ public class CreateEmployeeContractTest extends BaseTest {
         if (createdEmployeeId != -1) {
             employeeHelperDB.deleteEmployee(createdEmployeeId);
         }
-
     }
 }

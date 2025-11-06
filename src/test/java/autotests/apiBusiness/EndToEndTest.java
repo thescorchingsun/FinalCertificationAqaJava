@@ -3,6 +3,8 @@ package autotests.apiBusiness;
 import entities.EmployeeRequest;
 import entities.EmployeeResponse;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,14 +13,15 @@ import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
+@Epic("Business Logic")
 public class EndToEndTest extends BaseTest {
 
-    private final String FIRSTNAME = "Elizabeth";
-    private final String SURNAME = "Addington";
-    private final String POSITION = "Engineer";
-    private final String CITY = "Montreal";
-    private final String CITY_UPDATE = "Moscow";
-    private final String POSITION_UPDATE = "Team Lead";
+    private final String FIRSTNAME = faker.name().firstName();
+    private final String SURNAME = faker.name().lastName();
+    private final String POSITION = faker.job().field();
+    private final String CITY = faker.address().city();
+    private final String CITY_UPDATE = faker.address().city();;
+    private final String POSITION_UPDATE = faker.job().field();;
 
     @Test
     @DisplayName("Создание, редактирование, удаление сотрудника")
@@ -41,7 +44,7 @@ public class EndToEndTest extends BaseTest {
         step("Проверка, что у сотрудника поменялся город", step -> {
             assertEquals(CITY_UPDATE, updatedEmployee.getCity());
         });
-        step("Проверка, что у сотрудника поменялся должность", step -> {
+        step("Проверка, что у сотрудника поменялась должность", step -> {
             assertEquals(POSITION_UPDATE, updatedEmployee.getPosition());
         });
 

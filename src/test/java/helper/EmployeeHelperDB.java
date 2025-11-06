@@ -1,9 +1,9 @@
 package helper;
 
+import com.google.gson.Gson;
 import entities.EmployeeRequest;
 import entities.EmployeeResponse;
-import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.qameta.allure.Allure.addAttachment;
+
 @Slf4j
+@Epic("Database")
+@Feature("Employee Table")
+@Story("CRUD operations for Employee")
 public class EmployeeHelperDB extends AbstractHelper {
 
     private static final Logger log = LoggerFactory.getLogger(EmployeeHelperDB.class);
@@ -28,27 +34,28 @@ public class EmployeeHelperDB extends AbstractHelper {
     @Step("Создание сотрудника в БД: {employee}")
     public int createEmployee(EmployeeRequest employee) throws SQLException {
         String INSERT_EMPLOYEE = "INSERT INTO employee(\"name\",\"surname\",\"city\",\"position\") values(?,?,?,?);";
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getSurname());
             preparedStatement.setString(3, employee.getCity());
             preparedStatement.setString(4, employee.getPosition());
-            Allure.addAttachment("SQL-запрос", INSERT_EMPLOYEE);
-            Allure.addAttachment("Параметры", employee.toString());
+            addAttachment("SQL-запрос", "text/plain", INSERT_EMPLOYEE);
+            addAttachment("Параметры (JSON)", "application/json", new Gson().toJson(employee));
 
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
             if (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                Allure.addAttachment("Созданный ID", String.valueOf(id));
+                addAttachment("Созданный ID", String.valueOf(id));
                 return id;
             } else {
                 throw new SQLException("Не удалось получить ID нового сотрудника");
             }
         } catch (SQLException e) {
             log.error("Ошибка при создании сотрудника: {}", e.getMessage(), e);
-            Allure.addAttachment("Ошибка SQL", e.toString());
+            addAttachment("Ошибка SQL", "text/plain", e.toString());
             throw e;
         }
     }
@@ -60,8 +67,8 @@ public class EmployeeHelperDB extends AbstractHelper {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_NAME_SURNAME)) {
             preparedStatement.setInt(1, id);
-            Allure.addAttachment("SQL-запрос", SELECT_NAME_SURNAME);
-            Allure.addAttachment("Параметр id", String.valueOf(id));
+            addAttachment("SQL-запрос", "text/plain",  SELECT_NAME_SURNAME);
+            addAttachment("Параметр id", String.valueOf(id));
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -72,15 +79,15 @@ public class EmployeeHelperDB extends AbstractHelper {
                         resultSet.getString("surname"),
                         resultSet.getInt("id")
                 );
-                Allure.addAttachment("Результат", employee.toString());
+                addAttachment("Результат", employee.toString());
                 return employee;
             } else {
-                Allure.addAttachment("Результат", "Сотрудник не найден");
+                addAttachment("Результат", "Сотрудник не найден");
                 return new EmployeeResponse();
             }
         } catch (Exception e) {
             log.error("Ошибка при получении сотрудника: {}", e.getMessage(), e);
-            Allure.addAttachment("Ошибка SQL", e.toString());
+            addAttachment("Ошибка SQL", "text/plain", e.toString());
             throw e;
         }
     }
@@ -88,21 +95,22 @@ public class EmployeeHelperDB extends AbstractHelper {
     @Step("Обновление сотрудника id={id}")
     public boolean updateEmployee(int id, EmployeeRequest employee) throws SQLException {
         String UPDATE_EMPLOYEE = "UPDATE employee SET name = ?, surname = ?, city = ?, position = ? WHERE id = ?;";
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE)) {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getSurname());
             preparedStatement.setString(3, employee.getCity());
             preparedStatement.setString(4, employee.getPosition());
             preparedStatement.setInt(5, id);
-            Allure.addAttachment("SQL-запрос", UPDATE_EMPLOYEE);
-            Allure.addAttachment("Параметры", employee.toString());
+            addAttachment("SQL-запрос","text/plain", UPDATE_EMPLOYEE);
+            addAttachment("Параметры (JSON)", "application/json", new Gson().toJson(employee));
 
             int affectedRows = preparedStatement.executeUpdate();
-            Allure.addAttachment("Количество изменённых строк", String.valueOf(affectedRows));
+            addAttachment("Количество изменённых строк", String.valueOf(affectedRows));
             return affectedRows > 0;
         } catch (SQLException e) {
             log.error("Ошибка при обновлении сотрудника: {}", e.getMessage(), e);
-            Allure.addAttachment("Ошибка SQL", e.toString());
+            addAttachment("Ошибка SQL", "text/plain", e.toString());
             throw e;
         }
     }
@@ -113,12 +121,12 @@ public class EmployeeHelperDB extends AbstractHelper {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE)) {
             preparedStatement.setInt(1, id);
-            Allure.addAttachment("SQL-запрос", DELETE_EMPLOYEE);
-            Allure.addAttachment("ID", String.valueOf(id));
+            addAttachment("SQL-запрос", "text/plain", DELETE_EMPLOYEE);
+            addAttachment("ID", String.valueOf(id));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             log.error("Ошибка при удалении сотрудника id={}: {}", id, e.getMessage(), e);
-            Allure.addAttachment("Ошибка SQL", e.toString());
+            addAttachment("Ошибка SQL", "text/plain", e.toString());
             throw e;
         }
     }
@@ -126,8 +134,9 @@ public class EmployeeHelperDB extends AbstractHelper {
     @Step("Поиск сотрудников по имени {name}")
     public List<EmployeeResponse> getEmployeesByName(String name) throws Exception {
         String SELECT_BY_NAME = "SELECT * FROM employee WHERE name = ?;";
-        Allure.addAttachment("SQL-запрос", SELECT_BY_NAME);
-        Allure.addAttachment("Параметр name", name);
+
+        addAttachment("SQL-запрос", "text/plain", SELECT_BY_NAME);
+        addAttachment("Параметр name", name);
 
         PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_NAME);
         preparedStatement.setString(1, name);
@@ -144,16 +153,17 @@ public class EmployeeHelperDB extends AbstractHelper {
                     resultSet.getInt("id")
             ));
         }
-        Allure.addAttachment("Количество найденных сотрудников", String.valueOf(employees.size()));
+        addAttachment("Количество найденных сотрудников", String.valueOf(employees.size()));
         return employees;
     }
 
     @Step("Получение всех сотрудников")
     public List<EmployeeResponse> getAllEmployees() throws Exception {
-        String sql = "SELECT * FROM employee;";
-        Allure.addAttachment("SQL-запрос", sql);
+        String SELECT_FROM = "SELECT * FROM employee;";
 
-        PreparedStatement statement = connection.prepareStatement(sql);
+        addAttachment("SQL-запрос", "text/plain", SELECT_FROM);
+
+        PreparedStatement statement = connection.prepareStatement(SELECT_FROM);
         ResultSet resultSet = statement.executeQuery();
 
         List<EmployeeResponse> employees = new ArrayList<>();
@@ -166,7 +176,7 @@ public class EmployeeHelperDB extends AbstractHelper {
                     resultSet.getInt("id")
             ));
         }
-        Allure.addAttachment("Количество сотрудников", String.valueOf(employees.size()));
+        addAttachment("Количество сотрудников", String.valueOf(employees.size()));
         return employees;
     }
 }

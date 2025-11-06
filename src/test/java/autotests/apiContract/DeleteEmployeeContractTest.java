@@ -3,7 +3,9 @@ package autotests.apiContract;
 import entities.EmployeeRequest;
 import helper.EnvHelper;
 import helper.HttpCode;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import io.restassured.http.ContentType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,12 +13,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 @Slf4j
+@Epic("Contract Tests")
+@Story("Delete Employee")
 public class DeleteEmployeeContractTest extends BaseTest {
 
     private final String FIRSTNAME = "Olga";
@@ -112,7 +117,7 @@ public class DeleteEmployeeContractTest extends BaseTest {
                     when().
                     delete("/employee/" + createdEmployeeId).
                     then().log().all().
-                    time(lessThan(1300L));
+                    time(lessThan(1300L), TimeUnit.MILLISECONDS);
         });
     }
 }

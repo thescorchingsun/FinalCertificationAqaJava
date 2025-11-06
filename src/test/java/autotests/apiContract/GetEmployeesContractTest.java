@@ -1,15 +1,21 @@
 package autotests.apiContract;
 
 import helper.HttpCode;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.TimeUnit;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 @Slf4j
+@Epic("Contract Tests")
+@Story("Get Employees")
 public class GetEmployeesContractTest extends BaseTest {
 
     @Test
@@ -76,7 +82,7 @@ public class GetEmployeesContractTest extends BaseTest {
                     when().
                     get("/employees").
                     then().log().all().
-                    time(lessThan(1300L));
+                    time(lessThan(1300L), TimeUnit.MILLISECONDS);
         });
     }
 

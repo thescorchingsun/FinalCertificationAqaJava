@@ -4,9 +4,13 @@ import helper.EnvHelper;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
+import java.nio.file.Path;
+
 /** В классе указаны: локаторы, методы для взаимодействия с элементами на странице, assertions  */
 
 public class LoginPage extends BasePage {
@@ -15,6 +19,7 @@ public class LoginPage extends BasePage {
     private final By passwordInput = By.name("password");
     private final By loginButtonContainer = By.cssSelector("#login_button_container");
     private final By loginButton = By.name("login-button");
+
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -57,6 +62,8 @@ public class LoginPage extends BasePage {
         driver.findElement(loginButton).click();
         return new ProductsPage(driver);
     }
+
+    // методы для скриншотных тестов
 
     // проверки в тесте
     @Step("Проверить текст ошибки")

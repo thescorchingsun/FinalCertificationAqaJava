@@ -3,7 +3,8 @@ package autotests.apiBusiness;
 import entities.EmployeeRequest;
 import entities.EmployeeResponse;
 
-import io.qameta.allure.Step;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
@@ -14,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
+@Epic("Business Logic")
+@Story("Update employee")
 public class UpdateEmployeeBusinessTest extends BaseTest {
 
     private final String FIRSTNAME = "Rita";
