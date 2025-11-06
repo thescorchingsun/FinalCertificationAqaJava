@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -32,75 +33,86 @@ public class DeleteEmployeeContractTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("DELETE. Удаление сотрудника, статус код 200")
+    @DisplayName("DELETE. Удаление сотрудника, статус код " + HttpCode.OK)
     public void deleteEmployeeStatusCode200Test() {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
+        String token = getAdminToken();
 
-        given().
-                header("Authorization", "Bearer " + token).
-                contentType(ContentType.JSON).
-                when().
-                delete("/employee/" + createdEmployeeId).
-                then().log().all().
-                statusCode(HttpCode.OK);
+        step("Удаление сотрудника и проверка статус кода " + HttpCode.OK, () -> {
+            given().
+                    header("Authorization", "Bearer " + token).
+                    contentType(ContentType.JSON).
+                    when().
+                    delete("/employee/" + createdEmployeeId).
+                    then().log().all().
+                    statusCode(HttpCode.OK);
+        });
     }
 
     @Test
     @DisplayName("DELETE. Удаление сотрудника, Content-Type")
     public void deleteEmployeeContentTypeTest() {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
+        String token = getAdminToken();
 
-        given().
-                header("Authorization", "Bearer " + token).
-                contentType(ContentType.JSON).
-                when().
-                delete("/employee/" + createdEmployeeId).
-                then().log().all().
-                header("Content-Type", equalTo("application/json"));
+        step("Удаление сотрудника и проверка Content-Type", () -> {
+            given().
+                    header("Authorization", "Bearer " + token).
+                    contentType(ContentType.JSON).
+                    when().
+                    delete("/employee/" + createdEmployeeId).
+                    then().log().all().
+                    header("Content-Type", equalTo("application/json"));
+        });
+
     }
 
     @Test
     @DisplayName("DELETE. Удаление сотрудника, текст и тип сообщения")
     public void deleteEmployeeCheckMessageTest() {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
+        String token = getAdminToken();
 
-        given().
-                header("Authorization", "Bearer " + token).
-                contentType(ContentType.JSON).
-                when().
-                delete("/employee/" + createdEmployeeId).
-                then().log().all().
-                body("message", equalTo("Deleted")).
-                body("message", isA(String.class));
+        step("Удаление сотрудника и проверка текста и типа сообщения", () -> {
+            given().
+                    header("Authorization", "Bearer " + token).
+                    contentType(ContentType.JSON).
+                    when().
+                    delete("/employee/" + createdEmployeeId).
+                    then().log().all().
+                    body("message", equalTo("Deleted")).
+                    body("message", isA(String.class));
+        });
     }
 
     @Test
-    @DisplayName("DELETE. Сотрудник не найден по id, статус код 404")
+    @DisplayName("DELETE. Сотрудник не найден по id, статус код " + HttpCode.NOT_FOUND)
     public void deleteEmployeeNotFoundStatusCode404Test() throws SQLException {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
+        String token = getAdminToken();
 
-        given().
-                header("Authorization", "Bearer " + token).
-                contentType(ContentType.JSON).
-                when().
-                delete("/employee/" + 778676767).
-                then().log().all().
-                statusCode(HttpCode.NOT_FOUND);
-
-        employeeHelperDB.deleteEmployee(createdEmployeeId);
+        step("Проверка статус кода " + HttpCode.NOT_FOUND + ", если сотрудник не найден по id", () -> {
+            given().
+                    header("Authorization", "Bearer " + token).
+                    contentType(ContentType.JSON).
+                    when().
+                    delete("/employee/" + 778676767).
+                    then().log().all().
+                    statusCode(HttpCode.NOT_FOUND);
+        });
+        step("Удаление сотрудника после теста", () -> {
+            employeeHelperDB.deleteEmployee(createdEmployeeId);
+        });
     }
 
     @Test
     @DisplayName("DELETE. Удаление сотрудника, скорость ответа, не более 1300 миллисекунд")
     public void deleteEmployeeResponseTimeTest() {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
-
-        given().
-                header("Authorization", "Bearer " + token).
-                contentType(ContentType.JSON).
-                when().
-                delete("/employee/" + createdEmployeeId).
-                then().log().all().
-                time(lessThan(1300L));
+        String token = getAdminToken();
+        step("Удаление сотрудника и проверка скорости ответа", () -> {
+            given().
+                    header("Authorization", "Bearer " + token).
+                    contentType(ContentType.JSON).
+                    when().
+                    delete("/employee/" + createdEmployeeId).
+                    then().log().all().
+                    time(lessThan(1300L));
+        });
     }
 }

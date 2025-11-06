@@ -3,7 +3,6 @@ package autotests.apiBusiness;
 import entities.EmployeeRequest;
 import entities.EmployeeResponse;
 import helper.EmployeeHelperDB;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
@@ -35,12 +35,10 @@ public class CreateEmployeeBusinessTest extends BaseTest {
     @Test
     @DisplayName("POST. Создание сотрудника проверка по id")
     public void createEmployeeTest() throws Exception {
-        Allure.step("Создание сотрудника", step -> {
-            EmployeeRequest request = (new EmployeeRequest(CITY, FIRSTNAME, POSITION, SURNAME));
-            createdEmployeeId = employeeHelperDB.createEmployee(request);
-        });
+        EmployeeRequest request = (new EmployeeRequest(CITY, FIRSTNAME, POSITION, SURNAME));
+        createdEmployeeId = employeeHelperDB.createEmployee(request);
 
-        Allure.step("Проверка по id, что сотрудник создался", step -> {
+        step("Проверка по id, что сотрудник создался", step -> {
             EmployeeResponse employee = employeeHelperDB.getEmployee(createdEmployeeId);
             assertEquals(createdEmployeeId, employee.getId());
         });
@@ -55,13 +53,11 @@ public class CreateEmployeeBusinessTest extends BaseTest {
 
         EmployeeResponse employee = employeeHelperDB.getEmployee(secondEmployeeId);
 
-        Allure.step("Проверка по id, что второй сотрудник создался", step -> {
+        step("Проверка по id, что второй сотрудник создался", step -> {
             assertEquals(secondEmployeeId, employee.getId());
         });
-        Allure.step("Удаление сотрудника", step -> {
-            employeeHelperDB.deleteEmployee(firstEmployeeId);
-            createdEmployeeId = secondEmployeeId;
-        });
+        employeeHelperDB.deleteEmployee(firstEmployeeId);
+        createdEmployeeId = secondEmployeeId;
     }
 
     @Test
@@ -71,10 +67,10 @@ public class CreateEmployeeBusinessTest extends BaseTest {
         createdEmployeeId = employeeHelperDB.createEmployee(request);
         EmployeeResponse employee = employeeHelperDB.getEmployee(createdEmployeeId);
 
-        Allure.step("Проверка по id, что сотрудник создался", step -> {
+        step("Проверка по id, что сотрудник создался", step -> {
             assertEquals(createdEmployeeId, employee.getId());
         });
-        Allure.step("Проверка, что у сотрудника нет города", step -> {
+        step("Проверка, что у сотрудника нет города", step -> {
             assertEquals("", employee.getCity());
         });
     }
@@ -86,10 +82,10 @@ public class CreateEmployeeBusinessTest extends BaseTest {
         createdEmployeeId = employeeHelperDB.createEmployee(request);
         EmployeeResponse employee = employeeHelperDB.getEmployee(createdEmployeeId);
 
-        Allure.step("Проверка по id, что сотрудник создался", step -> {
+        step("Проверка по id, что сотрудник создался", step -> {
             assertEquals(createdEmployeeId, employee.getId());
         });
-        Allure.step("Проверка, что у сотрудника нет имени", step -> {
+        step("Проверка, что у сотрудника нет имени", step -> {
             assertEquals("", employee.getName());
         });
     }
@@ -101,10 +97,10 @@ public class CreateEmployeeBusinessTest extends BaseTest {
         createdEmployeeId = employeeHelperDB.createEmployee(request);
         EmployeeResponse employee = employeeHelperDB.getEmployee(createdEmployeeId);
 
-        Allure.step("Проверка по id, что сотрудник создался.", step -> {
+        step("Проверка по id, что сотрудник создался.", step -> {
             assertEquals(createdEmployeeId, employee.getId());
         });
-        Allure.step("Проверка, что у сотрудника нет фамилии.", step -> {
+        step("Проверка, что у сотрудника нет фамилии.", step -> {
             assertEquals("", employee.getSurname());
         });
     }
@@ -116,16 +112,15 @@ public class CreateEmployeeBusinessTest extends BaseTest {
         createdEmployeeId = employeeHelperDB.createEmployee(request);
         EmployeeResponse employee = employeeHelperDB.getEmployee(createdEmployeeId);
 
-        Allure.step("Проверка по id, что сотрудник создался.", step -> {
+        step("Проверка по id, что сотрудник создался.", step -> {
             assertEquals(createdEmployeeId, employee.getId());
         });
-        Allure.step("Проверка, что у сотрудника нет должности.", step -> {
+        step("Проверка, что у сотрудника нет должности.", step -> {
             assertEquals("", employee.getPosition());
         });
     }
 
     @AfterEach
-    @Step("Удаление сотрудника после теста")
     public void tearDown() throws SQLException {
         if (createdEmployeeId > 0) {
             employeeHelperDB.deleteEmployee(createdEmployeeId);

@@ -16,17 +16,6 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
 
 ### NetBeans ###
 /nbproject/private/
@@ -41,6 +30,6 @@ bin/
 .idea
 
 # Allure и временные файлы
-.allure/
+.allure
 .allure/allure-2.30.0/
 target/

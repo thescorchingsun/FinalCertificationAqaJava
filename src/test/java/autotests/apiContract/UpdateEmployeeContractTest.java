@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
 
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -35,130 +36,141 @@ public class UpdateEmployeeContractTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("PUT. Обновление сотрудника по всем полям, статус код 200")
+    @DisplayName("PUT. Обновление сотрудника по всем полям, статус код " + HttpCode.OK)
     public void putEmployeeUpdateAllFieldsStatusCode200Test() {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
+        String token = getAdminToken();
 
-        EmployeeRequest updatedRequest = new EmployeeRequest(CITY_2, FIRSTNAME_2, POSITION_2, SURNAME_2);
+        step("Обновление сотрудника по всем полям, проверка статус кода " + HttpCode.OK, () -> {
+            EmployeeRequest updatedRequest = new EmployeeRequest(CITY_2, FIRSTNAME_2, POSITION_2, SURNAME_2);
 
-        createdEmployeeId = given().
-                header("Authorization", "Bearer " + token).
-                contentType(ContentType.JSON).
-                body(updatedRequest).
-                when().
-                put("/employee/" + createdEmployeeId).
-                then().log().all().
-                statusCode(HttpCode.OK).
-                extract().
-                jsonPath().
-                getInt("id");
-        given().
-                when().
-                get("/employee/" + createdEmployeeId).
-                then().log().all().
-                body("name", equalTo(FIRSTNAME_2)).
-                body("surname", equalTo(SURNAME_2)).
-                body("position", equalTo(POSITION_2)).
-                body("city", equalTo(CITY_2));
+            createdEmployeeId = given().
+                    header("Authorization", "Bearer " + token).
+                    contentType(ContentType.JSON).
+                    body(updatedRequest).
+                    when().
+                    put("/employee/" + createdEmployeeId).
+                    then().log().all().
+                    statusCode(HttpCode.OK).
+                    extract().
+                    jsonPath().
+                    getInt("id");
+            given().
+                    when().
+                    get("/employee/" + createdEmployeeId).
+                    then().log().all().
+                    body("name", equalTo(FIRSTNAME_2)).
+                    body("surname", equalTo(SURNAME_2)).
+                    body("position", equalTo(POSITION_2)).
+                    body("city", equalTo(CITY_2));
+        });
     }
 
     @Test
     @DisplayName("PUT. Обновление сотрудника по всем полям, Content-type")
     public void putEmployeeUpdateContentTypeTest() {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
+        String token = getAdminToken();
 
-        EmployeeRequest updatedRequest = new EmployeeRequest(CITY_2, FIRSTNAME_2, POSITION_2, SURNAME_2);
+        step("Обновление сотрудника по всем полям, проверка Content-type ", () -> {
+            EmployeeRequest updatedRequest = new EmployeeRequest(CITY_2, FIRSTNAME_2, POSITION_2, SURNAME_2);
 
-        createdEmployeeId = given().
-                header("Authorization", "Bearer " + token).
-                contentType(ContentType.JSON).
-                body(updatedRequest).
-                when().
-                put("/employee/" + createdEmployeeId).
-                then().log().all().
-                header("Content-Type", equalTo("application/json")).
-                extract().
-                jsonPath().
-                getInt("id");
+            createdEmployeeId = given().
+                    header("Authorization", "Bearer " + token).
+                    contentType(ContentType.JSON).
+                    body(updatedRequest).
+                    when().
+                    put("/employee/" + createdEmployeeId).
+                    then().log().all().
+                    header("Content-Type", equalTo("application/json")).
+                    extract().
+                    jsonPath().
+                    getInt("id");
+        });
     }
 
     @Test
     @DisplayName("PUT. Обновление сотрудника по всем полям, проверка текста и типа успешного сообщения")
     public void putEmployeeUpdateCheckMessageTest() {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
+        String token = getAdminToken();
 
-        EmployeeRequest updatedRequest = new EmployeeRequest(CITY_2, FIRSTNAME_2, POSITION_2, SURNAME_2);
-
-        createdEmployeeId = given().
-                header("Authorization", "Bearer " + token).
-                contentType(ContentType.JSON).
-                body(updatedRequest).
-                when().
-                put("/employee/" + createdEmployeeId).
-                then().log().all().
-                body("message", equalTo("Employee updated successfully")).
-                body("message", isA(String.class)).
-                extract().
-                jsonPath().
-                getInt("id");
+        step("Обновление сотрудника по всем полям, проверка текста и типа успешного сообщения", () -> {
+            EmployeeRequest updatedRequest = new EmployeeRequest(CITY_2, FIRSTNAME_2, POSITION_2, SURNAME_2);
+            createdEmployeeId = given().
+                    header("Authorization", "Bearer " + token).
+                    contentType(ContentType.JSON).
+                    body(updatedRequest).
+                    when().
+                    put("/employee/" + createdEmployeeId).
+                    then().log().all().
+                    body("message", equalTo("Employee updated successfully")).
+                    body("message", isA(String.class)).
+                    extract().
+                    jsonPath().
+                    getInt("id");
+        });
     }
 
-
     @Test
-    @DisplayName("PUT. Ошибка при обновлении сотрудника без обязательного поля position. Статус код 400, текст и тип ошибки")
+    @DisplayName("PUT. Ошибка при обновлении сотрудника без обязательного поля position. Статус код " +
+            HttpCode.BAD_REQUEST + ", текст и тип ошибки")
     public void putEmployeeWithoutPositionCheckBodyStatusCode400Test() {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
+        String token = getAdminToken();
 
-        given().
-                body(new EmployeeRequest(FIRSTNAME_2, CITY_2, SURNAME_2)).
-                contentType(ContentType.JSON).
-                header("Authorization", "Bearer " + token).
-                when().
-                put("/employee/" + createdEmployeeId).
-                then().log().all().
-                statusCode(HttpCode.BAD_REQUEST).
-                body("error", equalTo("Invalid field types")).
-                body("error", isA(String.class)).
-                extract().
-                body().as(ValidationErrorResponse.class);
+        step("Ошибка при обновление сотрудника без обязательного поля position, проверка статус кода " + HttpCode.BAD_REQUEST
+                + ", текста и типа ошибки", () -> {
+            given().
+                    body(new EmployeeRequest(FIRSTNAME_2, CITY_2, SURNAME_2)).
+                    contentType(ContentType.JSON).
+                    header("Authorization", "Bearer " + token).
+                    when().
+                    put("/employee/" + createdEmployeeId).
+                    then().log().all().
+                    statusCode(HttpCode.BAD_REQUEST).
+                    body("error", equalTo("Invalid field types")).
+                    body("error", isA(String.class)).
+                    extract().
+                    body().as(ValidationErrorResponse.class);
+        });
     }
 
     @Test
-    @DisplayName("PUT. Cотрудник не найден по id . Статус код 404, тип ошибки ")
+    @DisplayName("PUT. Сотрудник не найден по id. Статус код " + HttpCode.NOT_FOUND + ", тип ошибки ")
     public void putEmployeeNotFoundStatusCode404Test() {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
+        String token = getAdminToken();
 
-        given().
-                body(new EmployeeRequest(CITY, FIRSTNAME, POSITION, SURNAME)).
-                contentType(ContentType.JSON).
-                header("Authorization", "Bearer " + token).
-                when().
-                put("/employee/" + "24234234").
-                then().log().all().
-                statusCode(HttpCode.NOT_FOUND).
-                body("error", isA(String.class)).
-                extract().
-                body().as(ValidationErrorResponse.class);
+        step("Сотрудник для обновления не найден по id, проверка статус кода и типа ошибки", () -> {
+            given().
+                    body(new EmployeeRequest(CITY, FIRSTNAME, POSITION, SURNAME)).
+                    contentType(ContentType.JSON).
+                    header("Authorization", "Bearer " + token).
+                    when().
+                    put("/employee/" + "24234234").
+                    then().log().all().
+                    statusCode(HttpCode.NOT_FOUND).
+                    body("error", isA(String.class)).
+                    extract().
+                    body().as(ValidationErrorResponse.class);
+        });
     }
 
     @Test
     @DisplayName("PUT. Обновить сотрудника, скорость ответа, не более 1300 миллисекунд")
     public void putUpdateEmployeeResponseTimeTest() {
-        String token = authHelper.getToken(envHelper.getAdminLogin(), envHelper.getAdminPassword());
+        String token = getAdminToken();
 
-        EmployeeRequest updatedRequest = new EmployeeRequest(CITY_2, FIRSTNAME, POSITION_2, SURNAME);
-
-        createdEmployeeId = given().
-                header("Authorization", "Bearer " + token).
-                contentType(ContentType.JSON).
-                body(updatedRequest).
-                when().
-                put("/employee/" + createdEmployeeId).
-                then().log().all().
-                time(lessThan(1300L)).
-                extract().
-                jsonPath().
-                getInt("id");
+        step("Обновление сотрудника, проверка скорости ответа", () -> {
+            EmployeeRequest updatedRequest = new EmployeeRequest(CITY_2, FIRSTNAME, POSITION_2, SURNAME);
+            createdEmployeeId = given().
+                    header("Authorization", "Bearer " + token).
+                    contentType(ContentType.JSON).
+                    body(updatedRequest).
+                    when().
+                    put("/employee/" + createdEmployeeId).
+                    then().log().all().
+                    time(lessThan(1300L)).
+                    extract().
+                    jsonPath().
+                    getInt("id");
+        });
     }
 
     @AfterEach

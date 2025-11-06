@@ -71,4 +71,16 @@ public class EmployeeResponse {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "EmployeeResponse {" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", city='" + city + '\'' +
+                ", position='" + position + '\'' +
+                '}';
+    }
+
+
 }

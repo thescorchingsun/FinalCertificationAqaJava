@@ -28,17 +28,24 @@ public class BaseTest {
 
 
     @BeforeAll
-    @Step("Получение базового URL")
+    @Step("Инициализация окружения и RestAssured")
     public static void setUri() throws SQLException, IOException {
         envHelper = new EnvHelper();
-        baseURI = envHelper.getApiBaseUrl();
-
         employeeHelperDB = new EmployeeHelperDB();
         authHelper = new AuthHelper();
 
+        baseURI = envHelper.getApiBaseUrl();
+
         // Один фильтр AllureRestAssured для всех тестов
         RestAssured.filters(CustomTpl.customLogFilter());
+    }
 
+    @Step("Авторизация и получение токена для администратора")
+    protected String getAdminToken() {
+        return authHelper.getToken(
+                envHelper.getAdminLogin(),
+                envHelper.getAdminPassword()
+        );
     }
 
 }

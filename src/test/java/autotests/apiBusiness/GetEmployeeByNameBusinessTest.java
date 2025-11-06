@@ -2,7 +2,6 @@ package autotests.apiBusiness;
 
 import entities.EmployeeRequest;
 import entities.EmployeeResponse;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.*;
 import java.sql.SQLException;
 import java.util.List;
 
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -22,7 +22,6 @@ public class GetEmployeeByNameBusinessTest extends BaseTest {
     private final String CITY = "Madrid";
 
     @BeforeEach
-    @Step("Создание сотрудника")
     public void setUp() throws Exception {
         EmployeeRequest employeeRequest = new EmployeeRequest(CITY, FIRSTNAME, POSITION, SURNAME);
         createdEmployeeId = employeeHelperDB.createEmployee(employeeRequest);
@@ -33,10 +32,10 @@ public class GetEmployeeByNameBusinessTest extends BaseTest {
     public void getEmployeeByNameTest() throws Exception {
         List<EmployeeResponse> employees = employeeHelperDB.getEmployeesByName(FIRSTNAME);
 
-        Allure.step("Проверка, что в БД есть сотрудник с именем " + FIRSTNAME, step -> {
+        step("Проверка, что в БД есть сотрудник с именем " + FIRSTNAME, step -> {
             assertFalse(employees.isEmpty());
         });
-        Allure.step("Проверка, что у найденного сотрудника правильный город, должность и фамилия", step -> {
+        step("Проверка, что у найденного сотрудника правильный город, должность и фамилия", step -> {
             boolean found = employees.stream().anyMatch(e ->
                     CITY.equals(e.getCity()) &&
                             POSITION.equals(e.getPosition()) &&
@@ -51,16 +50,15 @@ public class GetEmployeeByNameBusinessTest extends BaseTest {
     public void getNonExistentNameTest() throws Exception {
         List<EmployeeResponse> employees = employeeHelperDB.getEmployeesByName("nameIsNotInDatabase123");
 
-        Allure.step("Проверка, что отсутствующее имя в БД не записывается как 0", step -> {
+        step("Проверка, что отсутствующее имя в БД не записывается как 0", step -> {
             assertNotNull(employees);
         });
-        Allure.step("Проверка, что отсутствующее имя в БД не записывается как пустое поле", step -> {
+        step("Проверка, что отсутствующее имя в БД не записывается как пустое поле", step -> {
             assertTrue(employees.isEmpty());
         });
     }
 
     @AfterEach
-    @Step("Удаление сотрудника после теста")
     public void tearDown() throws SQLException {
         if (createdEmployeeId != -1) {
             employeeHelperDB.deleteEmployee(createdEmployeeId);

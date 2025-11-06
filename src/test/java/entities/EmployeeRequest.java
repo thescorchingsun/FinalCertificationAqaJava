@@ -59,4 +59,14 @@ public class EmployeeRequest {
         this.surname = surname;
     }
 
+    @Override
+    public String toString() {
+        return "EmployeeRequest {" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", city='" + city + '\'' +
+                ", position='" + position + '\'' +
+                '}';
+    }
+
 }
