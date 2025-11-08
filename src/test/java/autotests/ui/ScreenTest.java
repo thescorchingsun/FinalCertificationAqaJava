@@ -18,8 +18,6 @@ import java.nio.file.Path;
 @Story("User Authentication & Cart")
 public class ScreenTest extends BaseTest {
 
-    private static final Logger log = LoggerFactory.getLogger(ScreenTest.class);
-
     private MethodForScreen screenHelper;
 
     private final Path EXPECTED_DIR = Path.of("src/test/resources/screens/");
@@ -35,7 +33,7 @@ public class ScreenTest extends BaseTest {
     @Test
     @DisplayName("Проверка UI страницы авторизации")
     @Tags({@Tag("screenshot"), @Tag("regress")})
-    @Disabled("Запускать локально при запуске в headless режиме падает")
+    @Disabled("При запуске в headless режиме тест падает, локально проходит")
     public void screenLoginPageTest() throws IOException {
         loginPage.openLoginPage();
         screenHelper.compareScreens(
@@ -48,7 +46,7 @@ public class ScreenTest extends BaseTest {
     @Test
     @DisplayName("Проверка UI страницы каталога товаров")
     @Tags({@Tag("screenshot"), @Tag("regress")})
-    @Disabled("Запускать локально при запуске в headless режиме падает")
+    @Disabled("При запуске в headless режиме тест падает, локально проходит")
     public void screenCatalogPageTest() throws IOException {
         loginPage.openLoginPage()
                 .successfulAuth(USERNAME_STANDARD, PASSWORD)
