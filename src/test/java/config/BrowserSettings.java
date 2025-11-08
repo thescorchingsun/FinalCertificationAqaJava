@@ -32,7 +32,8 @@ public class BrowserSettings {
                 WebDriverManager.chromedriver().setup();
 
                 ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--headless");// без запуска браузера для CICD
+                chromeOptions.addArguments("--headless=new"); // без запуска браузера для CICD
+                chromeOptions.addArguments("--window-size=1920,1080");
                 chromeOptions.addArguments("--disable-gpu"); // иногда нужно для Windows CI
                 chromeOptions.addArguments("--no-sandbox"); // для Linux CI
                 chromeOptions.addArguments("--disable-dev-shm-usage"); // для Docker
@@ -53,6 +54,8 @@ public class BrowserSettings {
 
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.addArguments("--headless");
+                firefoxOptions.addArguments("--width=1920");
+                firefoxOptions.addArguments("--height=1080");
                 firefoxOptions.addArguments("--disable-gpu");
                 firefoxOptions.addArguments("--no-sandbox");
                 firefoxOptions.addArguments("--disable-dev-shm-usage");
