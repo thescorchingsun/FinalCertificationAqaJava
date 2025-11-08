@@ -58,7 +58,7 @@ jobs:
       - name: Generate Allure Report
         run: |
           mkdir -p allure-report
-          allure generate --clean target/allure-results -o allure-report
+          allure generate --clean target/allure-results -o allure-report || echo "Allure generation failed"
 
       - name: List Allure Report Files Before Upload
         run: ls -R allure-report || echo "No report generated"
