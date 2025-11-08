@@ -17,6 +17,7 @@ public class ProductsPage extends BasePage {
     private final By shoppingCartButton = By.id("shopping_cart_container");
     private final By productName = By.className("inventory_item_name");
     private final By productCard = By.className("inventory_item");
+    private final By productImage = By.className("inventory_item_img");
     private final By addToCartButton = By.tagName("button");
 
     private final Duration TIMEOUT = Duration.ofSeconds(10);
@@ -79,4 +80,13 @@ public class ProductsPage extends BasePage {
                 "Ожидался URL: " + expectedUrl + ", но получен: " + actualUrl);
         return this;
     }
+
+    @Step("Дождаться, чтобы все изображения товаров загрузились")
+    public ProductsPage isProductImageDisplayed() {
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(productImage));
+        return this;
+    }
+
+
 }

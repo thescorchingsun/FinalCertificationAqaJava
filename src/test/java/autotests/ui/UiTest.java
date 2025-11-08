@@ -1,6 +1,5 @@
 package autotests.ui;
 
-
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -25,7 +24,7 @@ public class UiTest extends BaseTest {
     private final String USERNAME_STANDARD = "standard_user";
     private final String USERNAME_BLOCKED = "locked_out_user";
     private final String PASSWORD = "secret_sauce";
-    private final String EXPECTED_RESULT_LOCKED_OUT_TEXT = "Epic sadface: Sorry, this user has been locked out.";
+    private final String EXPECTED_RESULT_LOCKED_OUT_TEXT = "пшеEpic sadface: Sorry, this user has been locked out.";
     private final String EXPECTED_RESULT_TITLE_TEXT = "Checkout: Complete!";
     private final List<String> PRODUCTS = List.of("Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt", "Sauce Labs Onesie");
     private final int ITEM_IN_CARD = 3;

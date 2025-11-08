@@ -49,7 +49,8 @@ public class ScreenTest extends BaseTest {
     @Tags({@Tag("screenshot"), @Tag("regress")})
     public void screenCatalogPageTest() throws IOException {
         loginPage.openLoginPage()
-                .successfulAuth(USERNAME_STANDARD, PASSWORD);
+                .successfulAuth(USERNAME_STANDARD, PASSWORD)
+                .isProductImageDisplayed();
         screenHelper.compareScreens(
                 EXPECTED_DIR.resolve("catalogPageExpected.png"),
                 DIFF_DIR,

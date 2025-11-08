@@ -42,7 +42,6 @@ public class EnvHelper {
     }
 
     // Для UI тестов
-
     public String getUiBaseUrl() {
         return properties.getProperty("ui.base.url");
     }

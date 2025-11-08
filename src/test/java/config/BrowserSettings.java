@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.logging.Level;
 
-/** В классе описаны настройки для браузера firefox и chrome */
+/** Настройки для браузеров firefox и chrome */
 @Slf4j
 public class BrowserSettings {
     private static final Logger log = LoggerFactory.getLogger(BrowserSettings.class);

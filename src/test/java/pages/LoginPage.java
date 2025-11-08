@@ -63,8 +63,6 @@ public class LoginPage extends BasePage {
         return new ProductsPage(driver);
     }
 
-    // методы для скриншотных тестов
-
     // проверки в тесте
     @Step("Проверить текст ошибки")
     public void assertEquals(String text) {

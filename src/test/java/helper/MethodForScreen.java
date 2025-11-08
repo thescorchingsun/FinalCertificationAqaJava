@@ -42,7 +42,7 @@ public class MethodForScreen {
 
         // Если эталона нет — создать и завершить тест
         if (!Files.exists(expectedPath)) {
-            log.warn("⚠️ Эталонный скриншот отсутствует. Создаю новый: {}", expectedPath);
+            log.warn("Эталонный скриншот отсутствует. Создаю новый: {}", expectedPath + " Перезапусти тест повторно.");
             ImageIO.write(actualImage, "png", expectedPath.toFile());
             throw new AssertionError("Эталон отсутствовал и был создан. Проверь изображение: " + expectedPath);
         }
@@ -60,4 +60,7 @@ public class MethodForScreen {
         log.info("Результат сравнения '{}': есть отличия = {}", screenName, diff.hasDiff());
         assertFalse(diff.hasDiff(), "Обнаружены отличия на странице '" + screenName + "'. См. diff: " + diffImage);
     }
+
+
+
 }
