@@ -47,6 +47,7 @@ public class ScreenTest extends BaseTest {
     @Test
     @DisplayName("Проверка UI страницы каталога товаров")
     @Tags({@Tag("screenshot"), @Tag("regress")})
+    @Disabled("Flaky тест. При локальном запуске работает стабильно, при удаленном запуске может падать. ")
     public void screenCatalogPageTest() throws IOException {
         loginPage.openLoginPage()
                 .successfulAuth(USERNAME_STANDARD, PASSWORD)

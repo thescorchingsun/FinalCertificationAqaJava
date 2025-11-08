@@ -187,12 +187,13 @@ FinalCertificationAqaJava/
 + SQL-логирование для API-тестов
 
 <p align="center">
-  <img src="https://github.com/thescorchingsun/FinalCertificationAqaJava/blob/main/resources/screens/allureApiBusniessTest.png" alt="Успешный API тест" width="600"/>
+  <img src="https://raw.githubusercontent.com/thescorchingsun/FinalCertificationAqaJava/main/resources/screens/allureApiBusniessTest.png" alt="Успешный API тест" width="600"/>
   <br>
   <em>Успешно пройденный API тест</em>
 </p>
+
 <p align="center">
-  <img src="https://github.com/thescorchingsun/FinalCertificationAqaJava/blob/main/resources/screens/allureFailedUiTest.png" alt="Падение UI теста" width="600"/>
+  <img src="https://raw.githubusercontent.com/thescorchingsun/FinalCertificationAqaJava/main/resources/screens/allureFailedUiTest.png" alt="Падение UI теста" width="600"/>
   <br>
   <em>Пример отчёта об упавшем UI тесте</em>
 </p>
