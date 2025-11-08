@@ -43,14 +43,22 @@ jobs:
           unzip allure.zip -d /opt/allure
           sudo ln -s /opt/allure/allure-2.25.0/bin/allure /usr/bin/allure
 
+      - name: Build
+        run: mvn clean install
+
       - name: Run tests
         run: mvn clean test
+
+      - name: List Allure Results Files
+        run: ls -R allure-results
 
       - name: Generate Allure Report
         run: |
           mkdir -p allure-report
           allure generate --clean target/allure-results -o allure-report
 
+      - name: List Allure Report Files Before Upload
+        run: ls -R allure-report
 
       - name: Upload Allure Report as artifact
         uses: actions/upload-pages-artifact@v3
