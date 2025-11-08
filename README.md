@@ -174,29 +174,3 @@ FinalCertificationAqaJava/
 └── README.md                               # Документация проекта
 ```
 
-## Пример отчета Allure
-
-После выполнения тестов формируется интерактивный отчёт:
-
-+ Статистика по прогонам
-
-+ Скриншоты и HTML-артефакты при падении
-
-+ Запросы и ответы API в формате .tpl
-
-+ SQL-логирование для API-тестов
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/thescorchingsun/FinalCertificationAqaJava/test/resources/screens/allureApiBusniessTest.png" alt="Успешный API тест" width="600"/>
-  <br>
-  <em>Успешно пройденный API тест</em>
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/thescorchingsun/FinalCertificationAqaJava/test/resources/screens/allureFailedUiTest.png" alt="Падение UI теста" width="600"/>
-  <br>
-  <em>Пример отчёта об упавшем UI тесте</em>
-</p>
-
-
-

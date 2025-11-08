@@ -43,8 +43,8 @@ jobs:
           unzip allure.zip -d /opt/allure
           sudo ln -s /opt/allure/allure-2.25.0/bin/allure /usr/bin/allure
 
-      - name: Clear Maven cache for commons-io
-        run: rm -rf ~/.m2/repository/commons-io
+      - name: Clear Maven cache completely
+        run: rm -rf ~/.m2/repository
 
       - name: Build
         run: mvn clean install -B
