@@ -35,6 +35,7 @@ public class ScreenTest extends BaseTest {
     @Test
     @DisplayName("Проверка UI страницы авторизации")
     @Tags({@Tag("screenshot"), @Tag("regress")})
+    @Disabled("Запускать локально при запуске в headless режиме падает")
     public void screenLoginPageTest() throws IOException {
         loginPage.openLoginPage();
         screenHelper.compareScreens(
@@ -47,7 +48,7 @@ public class ScreenTest extends BaseTest {
     @Test
     @DisplayName("Проверка UI страницы каталога товаров")
     @Tags({@Tag("screenshot"), @Tag("regress")})
-    @Disabled("Flaky тест. При локальном запуске работает стабильно, при удаленном запуске может падать. ")
+    @Disabled("Запускать локально при запуске в headless режиме падает")
     public void screenCatalogPageTest() throws IOException {
         loginPage.openLoginPage()
                 .successfulAuth(USERNAME_STANDARD, PASSWORD)

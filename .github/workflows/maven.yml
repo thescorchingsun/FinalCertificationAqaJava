@@ -47,10 +47,10 @@ jobs:
         run: rm -rf ~/.m2/repository
 
       - name: Build
-        run: mvn clean compile -B
+        run: mvn clean install -B
 
       - name: Run tests
-        run: mvn clean test -B -Dmaven.test.failure.ignore=true
+        run: mvn clean test -B
 
       - name: List Allure Results Files
         run: ls -R target/allure-results || echo "No allure-results found"
@@ -58,7 +58,7 @@ jobs:
       - name: Generate Allure Report
         run: |
           mkdir -p allure-report
-              allure generate --clean target/allure-results -o allure-report || echo "Allure generation failed"
+          allure generate --clean target/allure-results -o allure-report
 
       - name: List Allure Report Files Before Upload
         run: ls -R allure-report || echo "No report generated"
