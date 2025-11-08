@@ -50,7 +50,7 @@ public class ScreenTest extends BaseTest {
     public void screenCatalogPageTest() throws IOException {
         loginPage.openLoginPage()
                 .successfulAuth(USERNAME_STANDARD, PASSWORD)
-                .isProductImageDisplayed();
+                .waitUntilAllImagesLoaded();
         screenHelper.compareScreens(
                 EXPECTED_DIR.resolve("catalogPageExpected.png"),
                 DIFF_DIR,

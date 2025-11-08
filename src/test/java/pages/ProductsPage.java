@@ -3,6 +3,7 @@ package pages;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,10 +18,9 @@ public class ProductsPage extends BasePage {
     private final By shoppingCartButton = By.id("shopping_cart_container");
     private final By productName = By.className("inventory_item_name");
     private final By productCard = By.className("inventory_item");
-    private final By productImage = By.className("inventory_item_img");
     private final By addToCartButton = By.tagName("button");
 
-    private final Duration TIMEOUT = Duration.ofSeconds(10);
+    private final Duration TIMEOUT = Duration.ofSeconds(20);
 
     public ProductsPage(WebDriver driver) {
         super(driver);
@@ -82,11 +82,15 @@ public class ProductsPage extends BasePage {
     }
 
     @Step("Дождаться, чтобы все изображения товаров загрузились")
-    public ProductsPage isProductImageDisplayed() {
-        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(productImage));
-        return this;
-    }
+    public ProductsPage waitUntilAllImagesLoaded() {
 
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+            wait.until(driver -> ((JavascriptExecutor) driver).executeScript(
+                    "return Array.from(document.images).every(img => img.complete && img.naturalWidth > 0);"
+            ).equals(true));
+
+            return this;
+    }
 
 }
