@@ -3,7 +3,7 @@ package entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
-
+/** Модель ответа при ошибках валидации API-запросов */
 public class ValidationErrorResponse {
 
     private String message;

@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 
+/** Инкапсулирует логику работы с REST API, предоставляя тестам методы для создания, получения и удаления сотрудников */
 public class EmployeeHelper {
 
     private final AuthHelper authHelper;

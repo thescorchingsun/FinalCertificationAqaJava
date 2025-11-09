@@ -3,7 +3,7 @@ package helper;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-
+/** Вспомогательный класс для управления конфигурацией окружения */
 public class EnvHelper {
 
     private final Properties properties;

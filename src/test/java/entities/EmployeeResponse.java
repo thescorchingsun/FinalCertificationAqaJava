@@ -2,6 +2,7 @@ package entities;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+/** Модель данных, возвращаемых API при получении информации о сотруднике */
 
 public class EmployeeResponse {
 

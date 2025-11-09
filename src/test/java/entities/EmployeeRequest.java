@@ -1,5 +1,5 @@
 package entities;
-
+/** Модель тела запроса при создании или обновлении сотрудника. Используется в POST/PUT запросах */
 public class EmployeeRequest {
 
     private String city;

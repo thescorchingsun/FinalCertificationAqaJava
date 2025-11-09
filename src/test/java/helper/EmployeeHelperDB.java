@@ -19,6 +19,8 @@ import java.util.List;
 
 import static io.qameta.allure.Allure.addAttachment;
 
+/** Методы для выполнения CRUD запросов */
+
 @Slf4j
 @Epic("Database")
 @Feature("Employee Table")
@@ -59,7 +61,6 @@ public class EmployeeHelperDB extends AbstractHelper {
             throw e;
         }
     }
-
 
     @Step("Получение сотрудника из БД по id={id}")
     public EmployeeResponse getEmployee(int id) throws Exception {

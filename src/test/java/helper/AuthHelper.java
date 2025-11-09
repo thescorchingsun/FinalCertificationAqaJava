@@ -7,7 +7,7 @@ import io.restassured.http.ContentType;
 import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
-
+/** Получение админского токена для выполнения API запросов */
 public class AuthHelper {
 
     private final EnvHelper envHelper = new EnvHelper();

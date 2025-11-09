@@ -1,12 +1,11 @@
 package helper;
 
-import io.qameta.allure.Step;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+/** Подключение к БД */
 public class AbstractHelper {
 
     protected Connection connection;
