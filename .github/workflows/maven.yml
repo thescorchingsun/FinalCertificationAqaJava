@@ -43,14 +43,14 @@ jobs:
           unzip allure.zip -d /opt/allure
           sudo ln -s /opt/allure/allure-2.25.0/bin/allure /usr/bin/allure
 
-      - name: Build
+      - name: Build project
         run: mvn clean install
 
       - name: Run tests
         run: mvn clean test
 
       - name: List Allure Results Files
-        run: ls -R allure-results
+        run: ls -R target/allure-results
 
       - name: Generate Allure Report
         run: |
