@@ -2,7 +2,7 @@
 
 Полный проект автоматизации тестирования, объединяющий:
 - **UI автотесты** для сайта [saucedemo.com](https://www.saucedemo.com)
-- **API автотесты** для сервиса [innopolispython.onrender.com](https://innopolispython.onrender.com) с покрытием модуля employee.
+- **API автотесты** для сервиса [innopolispython.onrender.com](https://innopolispython.onrender.com/apidocs/#/) с покрытием модуля employee.
 
 Реализован на **Java + Maven + JUnit5**, визуальной отчётностью в **Allure** и CI/CD-запуском через **GitHub Actions**.
 
